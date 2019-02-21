@@ -4,6 +4,11 @@ const Users = require('../data/helpers/userDb')
 
 const router = express.Router()
 
+function upperCaseName(req, res, next) {
+    req.body.name = req.body.name.toUpperCase()
+    next()
+}
+
 router.get('/', async (req, res) => {
     try {
         const users = await Users.get(req.query)
@@ -46,7 +51,7 @@ router.get('/:id/posts', async (req, res) => {
     }
 })
 
-router.post('/', async (req, res) => {
+router.post('/', upperCaseName, async (req, res) => {
     try {
         const user = await Users.insert(req.body)
         res.status(201).json(user)
@@ -58,7 +63,7 @@ router.post('/', async (req, res) => {
     }
 })
 
-router.put('/:id', async (req, res) => {
+router.put('/:id', upperCaseName, async (req, res) => {
     const id = req.params.id
     const {name} = req.body
     try {

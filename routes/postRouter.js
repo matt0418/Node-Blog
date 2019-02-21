@@ -2,6 +2,9 @@ const express = require('express')
 const Posts = require('../data/helpers/postDb')
 const router = express.Router()
 
+
+
+
 router.get('/', async (req, res) => {
     try {
         const posts = await Posts.get(req.query)
